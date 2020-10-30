@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dribbbledanimation/main.dart';
+import 'package:dribbbledanimation/mainX.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

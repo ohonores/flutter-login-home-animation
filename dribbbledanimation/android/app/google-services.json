@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "498846402995",
+    "firebase_url": "https://ecuadoramalavida-f8ae1.firebaseio.com",
+    "project_id": "ecuadoramalavida-f8ae1",
+    "storage_bucket": "ecuadoramalavida-f8ae1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498846402995:android:e295edc3ab744658fc23c6",
+        "android_client_info": {
+          "package_name": "com.kubic.ecuadoramalavida"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498846402995-r4dh5t70hupvqka3d4o7t4q5qaop3gk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kubic.ecuadoramalavida",
+            "certificate_hash": "7e1cd9e7643c107945614f3f410efc4419ae00e2"
+          }
+        },
+        {
+          "client_id": "498846402995-8adutbma7fmvdhd8r616e3s385qulpoj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBln1zlHgMZdskCF0VxPYKKzV3LhVHAF_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498846402995-8adutbma7fmvdhd8r616e3s385qulpoj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

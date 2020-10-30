@@ -1,4 +1,4 @@
-package com.example.dribbledanimation;
+package com.kubic.ecuadoramalavida;
 
 import android.os.Bundle;
 
