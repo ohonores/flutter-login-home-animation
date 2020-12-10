@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'state/notificationState.dart';
 
 //flutter build apk
+//flutter run --release
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());

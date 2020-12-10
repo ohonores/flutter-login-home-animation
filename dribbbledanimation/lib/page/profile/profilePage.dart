@@ -17,6 +17,8 @@ import '../../widgets/newWidget/rippleButton.dart';
 import '../../widgets/tweet/tweet.dart';
 import '../../widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key key, this.profileId}) : super(key: key);
@@ -86,22 +88,13 @@ class _ProfilePageState extends State<ProfilePage>
                   SizedBox.expand(
                     child: Container(
                       padding: EdgeInsets.only(top: 50),
-                      height: 30,
+                      height: 50,
                       color: Colors.white,
                     ),
                   ),
                   // Container(height: 50, color: Colors.black),
 
-                  /// Banner image
-                  Container(
-                    height: 180,
-                    padding: EdgeInsets.only(top: 28),
-                    child: customNetworkImage(
-                      'https://pbs.twimg.com/profile_banners/457684585/1510495215/1500x500',
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-
+                  
                   /// User avatar, message icon, profile edit and follow/following button
                   Container(
                     alignment: Alignment.bottomLeft,
@@ -213,8 +206,8 @@ class _ProfilePageState extends State<ProfilePage>
                                   // Otherwise Follow/Following button will be display
                                   child: Text(
                                     isMyProfile
-                                        ? 'Edit Profile'
-                                        : isFollower() ? 'Following' : 'Follow',
+                                        ? 'Editar Perfil'
+                                        : isFollower() ? 'Siguiendo' : 'Seguir',
                                     style: TextStyle(
                                       color: isMyProfile
                                           ? Colors.black87.withAlpha(180)
@@ -240,7 +233,42 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   Widget _floatingActionButton() {
-    return FloatingActionButton(
+    var state = Provider.of<AuthState>(context, listen: false);
+    var identificacion = state?.userModel?.identificacion;
+    cprint("datos");
+        cprint(identificacion);
+    DocumentReference users = Firestore.instance.collection('usuarios').document(identificacion);
+    return StreamBuilder<DocumentSnapshot>(
+      stream: users.snapshots(includeMetadataChanges: true),
+      
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        
+    
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+      if (snapshot.hasData && snapshot.data.data !=null && snapshot.data.data['cedula'] == identificacion && snapshot.data.data['tipo'] == "genesis" ) {
+        
+      // cprint(authState.userModel?.profilePic);
+    return FloatingActionButton.extended(
+        onPressed: () {
+        Navigator.of(context).pushNamed('/CreateFeedPage');
+      },
+      label: Text('Publicar!'),
+      icon: Icon(
+        Icons.chat,
+        color: Theme.of(context).colorScheme.onPrimary,
+      ),
+      //backgroundColor: Colors.green,
+      foregroundColor: Colors.white,
+      tooltip: 'Publicar!',
+    );
+    /*return FloatingActionButton(
       onPressed: () {
         Navigator.of(context).pushNamed('/CreateFeedPage');
       },
@@ -251,7 +279,10 @@ class _ProfilePageState extends State<ProfilePage>
         iconColor: Theme.of(context).colorScheme.onPrimary,
         size: 25,
       ),
-    );
+    );*/}else{
+      return Text("");
+    }
+    });
   }
 
   Widget _emptyBox() {
@@ -288,7 +319,6 @@ class _ProfilePageState extends State<ProfilePage>
     var authstate = Provider.of<AuthState>(context);
     List<FeedModel> list;
     String id = widget.profileId ?? authstate.userId;
-
     /// Filter user's tweet among all tweets available in home page tweets list
     if (state.feedlist != null && state.feedlist.length > 0) {
       list = state.feedlist.where((x) => x.userId == id).toList();
@@ -325,8 +355,8 @@ class _ProfilePageState extends State<ProfilePage>
                         indicator: TabIndicator(),
                         controller: _tabController,
                         tabs: <Widget>[
-                          Text("Tweets"),
-                          Text("Tweets & replies"),
+                          Text("Publicaciones"),
+                          Text("Publicaciones & comentarios"),
                           Text("Media")
                         ],
                       ),
@@ -560,10 +590,10 @@ class UserNameRowWidget extends StatelessWidget {
                 width: 10,
                 height: 30,
               ),
-              _tappbleText(context, '${user.getFollower()}', ' Followers',
+              _tappbleText(context, '${user.getFollower()}', ' Seguidores',
                   'FollowerListPage'),
               SizedBox(width: 40),
-              _tappbleText(context, '${user.getFollowing()}', ' Following',
+              _tappbleText(context, '${user.getFollowing()}', ' Siguiendo',
                   'FollowingListPage'),
             ],
           ),

@@ -245,7 +245,7 @@ class _SidebarMenuState extends State<SidebarMenu> {
                   ),
                   _menuListRowButton('Autorizar Miembro',
                       icon: AppIcon.lists, icono: "assets/iconos/F.jpeg"),
-                  _menuListRowButton('Retirar Miembro',
+                  _menuListRowButton('Registrar Miembro',
                       icon: AppIcon.bookmark, icono: "assets/iconos/B.jpeg"),
                   _menuListRowButton('Bloquear Miembro',
                       icon: AppIcon.moments, icono: "assets/iconos/B.jpeg"),

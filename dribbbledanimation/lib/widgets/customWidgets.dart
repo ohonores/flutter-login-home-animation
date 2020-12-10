@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dribbbledanimation/helper/utility.dart';
+import 'package:dribbbledanimation/model/feedModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -220,7 +222,17 @@ SizedBox sizedBox({double height = 5, String title}) {
   );
 }
 
-Widget customNetworkImage(String path, {BoxFit fit = BoxFit.contain}) {
+Widget _loader(BuildContext context, String url, FeedModel model, String path) {
+  model.urlTemp = url;
+  cprint(path);
+  cprint(url);
+  return Container(
+    color: Color(0xffeeeeee),
+  );
+}
+
+Widget customNetworkImage(String path,
+    {BoxFit fit = BoxFit.contain, FeedModel model}) {
   return path.indexOf(".png") >= 0 || path.indexOf(".jpg") >= 0
       ? CachedNetworkImage(
           fit: fit,
@@ -234,9 +246,8 @@ Widget customNetworkImage(String path, {BoxFit fit = BoxFit.contain}) {
             ),
           ),
           placeholderFadeInDuration: Duration(milliseconds: 500),
-          placeholder: (context, url) => Container(
-            color: Color(0xffeeeeee),
-          ),
+          placeholder: (context, imageProvider) =>
+              _loader(context, imageProvider, model, path),
           errorWidget: (context, url, error) => Icon(Icons.error),
         )
       : (ClipRRect(

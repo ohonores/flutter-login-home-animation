@@ -4,6 +4,7 @@ class User {
   String userId;
   String displayName;
   String userName;
+  String identificacion;
   String webSite;
   String profilePic;
   String contact;
@@ -30,6 +31,7 @@ class User {
       this.location,
       this.createdAt,
       this.userName,
+      this.identificacion,
       this.followers,
       this.following,
       this.webSite,
@@ -58,6 +60,7 @@ class User {
     followers = map['followers'];
     following = map['following'];
     userName = map['userName'];
+    identificacion = map['identificacion'];
     webSite = map['webSite'];
     fcmToken = map['fcmToken'];
     isVerified = map['isVerified'] ?? false;
@@ -92,6 +95,7 @@ class User {
       'followers': followersList != null ? followersList.length : null,
       'following': followingList!= null ? followingList.length : null,
       'userName': userName,
+      'identificacion': identificacion,
       'webSite': webSite,
       'isVerified': isVerified ?? false,
       'fcmToken':fcmToken,
@@ -112,6 +116,7 @@ class User {
       String location,
       String createdAt,
       String userName,
+      String identificacion,
       int followers,
       int following,
       String webSite,
@@ -134,6 +139,7 @@ class User {
         profilePic: profilePic ?? this.profilePic,
         userId: userId ?? this.userId,
         userName: userName ?? this.userName,
+        identificacion: identificacion ?? this.identificacion,
         webSite: webSite ?? this.webSite,
         fcmToken:fcmToken ?? this.fcmToken,
         followersList: followersList ?? this.followersList,

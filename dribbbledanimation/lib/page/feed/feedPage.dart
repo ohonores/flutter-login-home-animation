@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../helper/constant.dart';
 import '../../helper/enum.dart';
+import '../../helper/utility.dart';
+
 import '../../helper/theme.dart';
 import '../../model/feedModel.dart';
 import '../../state/authState.dart';
@@ -11,6 +13,8 @@ import '../../widgets/newWidget/emptyList.dart';
 import '../../widgets/tweet/tweet.dart';
 import '../../widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key key, this.scaffoldKey, this.refreshIndicatorKey})
@@ -21,17 +25,32 @@ class FeedPage extends StatelessWidget {
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
 
   Widget _floatingActionButton(BuildContext context) {
-    return FloatingActionButton.extended(
-      onPressed: () {
+    var state = Provider.of<AuthState>(context, listen: false);
+    var identificacion = state?.userModel?.identificacion;
+    cprint("datos");
+        cprint(identificacion);
+    DocumentReference users = Firestore.instance.collection('usuarios').document(identificacion);
+    return StreamBuilder<DocumentSnapshot>(
+      stream: users.snapshots(includeMetadataChanges: true),
+      
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        
+    
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+      if (snapshot.hasData && snapshot.data.data !=null && snapshot.data.data['cedula'] == identificacion && snapshot.data.data['tipo'] == "genesis" ) {
+        
+      // cprint(authState.userModel?.profilePic);
+        return FloatingActionButton.extended(
+        onPressed: () {
         Navigator.of(context).pushNamed('/CreateFeedPage/tweet');
       },
-      /*child: customIcon(
-        context,
-        icon: AppIcon.fabTweet,
-        istwitterIcon: true,
-        iconColor: Theme.of(context).colorScheme.onPrimary,
-        size: 25,
-      ),*/
       label: Text('Publicar!'),
       icon: Icon(
         Icons.chat,
@@ -40,13 +59,19 @@ class FeedPage extends StatelessWidget {
       //backgroundColor: Colors.green,
       foregroundColor: Colors.white,
       tooltip: 'Publicar!',
+    );}else{
+      return Text("");
+    }
+      },
     );
+
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _floatingActionButton(context),
+      floatingActionButton:  _floatingActionButton(context),
       backgroundColor: TwitterColor.mystic,
       body: SafeArea(
         child: Container(

@@ -93,7 +93,7 @@ class TweetBottomSheet {
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.delete,
-                text: 'Delete Tweet',
+                text: 'Eliminar Publicación',
                 onPressed: () {
                   _deleteTweet(
                     context,
@@ -134,7 +134,7 @@ class TweetBottomSheet {
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.report,
-                text: 'Report Tweet',
+                text: 'Reporta Publicación',
               ),
       ],
     );
@@ -174,7 +174,7 @@ class TweetBottomSheet {
             ? _widgetBottomSheetRow(
                 context,
                 AppIcon.delete,
-                text: 'Delete Tweet',
+                text: 'Eliminar Publicación',
                 onPressed: () {
                   _deleteTweet(
                     context,
@@ -212,7 +212,7 @@ class TweetBottomSheet {
             : _widgetBottomSheetRow(
                 context,
                 AppIcon.report,
-                text: 'Report Tweet',
+                text: 'Reporta Publicación',
               ),
       ],
     );

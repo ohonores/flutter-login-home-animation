@@ -57,13 +57,14 @@ class FeedState extends AppState {
         }
 
         /// Only include Tweets of logged-in user's and his following user's
-        if (x.user.userId == userModel.userId ||
+        /* if (x.user.userId == userModel.userId ||
             (userModel?.followingList != null &&
                 userModel.followingList.contains(x.user.userId))) {
           return true;
         } else {
           return false;
-        }
+        }*/
+        return true;
       }).toList();
       if (list.isEmpty) {
         list = null;

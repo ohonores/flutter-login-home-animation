@@ -11,6 +11,7 @@ import '../../../state/feedState.dart';
 import '../../../widgets/customWidgets.dart';
 import '../../../widgets/tweet/widgets/tweetBottomSheet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class TweetIconsRow extends StatelessWidget {
   final FeedModel model;
@@ -38,9 +39,9 @@ class TweetIconsRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(
+         /* SizedBox(
             width: 20,
-          ),
+          ),*/
           _iconWidget(
             context,
             text: isTweetDetail ? '' : model.commentCount.toString(),
@@ -53,13 +54,13 @@ class TweetIconsRow extends StatelessWidget {
               Navigator.of(context).pushNamed('/ComposeTweetPage');
             },
           ),
-          _iconWidget(context,
+          /*_iconWidget(context,
               text: isTweetDetail ? '' : model.retweetCount.toString(),
               icon: AppIcon.retweet,
               iconColor: iconColor,
               size: size ?? 20, onPressed: () {
             TweetBottomSheet().openRetweetbottomSheet(context, type, model);
-          }),
+          }),*/
           _iconWidget(
             context,
             text: isTweetDetail ? '' : model.likeCount.toString(),
@@ -73,12 +74,17 @@ class TweetIconsRow extends StatelessWidget {
                 model.likeList.any((userId) => userId == authState.userId)
                     ? iconEnableColor
                     : iconColor,
-            size: size ?? 20,
+            size: 20,
           ),
           _iconWidget(context, text: '', icon: null, sysIcon: Icons.share,
-              onPressed: () {
-            share('${model.description}',
-                subject: '${model.user.displayName}\'s post');
+              onPressed: () async {
+             final file =
+                await DefaultCacheManager().getSingleFile(model.imagePath);
+            shareTextoAndImagenes(file.path, model.description,
+                subject: '${model.user.displayName}\'s post',
+                box: context.findRenderObject());
+            /*share('${model.description}',
+                subject: '${model.user.displayName}\'s post');*/
           }, iconColor: iconColor, size: size ?? 20),
         ],
       ),
@@ -134,8 +140,8 @@ class TweetIconsRow extends StatelessWidget {
             SizedBox(width: 5),
             customText(getPostTime2(model.createdAt), style: textStyle14),
             SizedBox(width: 10),
-            customText('Fwitter for Android',
-                style: TextStyle(color: Theme.of(context).primaryColor))
+            /*customText('Fwitter for Android',
+                style: TextStyle(color: Theme.of(context).primaryColor))*/
           ],
         ),
         SizedBox(height: 5),

@@ -15,6 +15,7 @@ class FeedModel {
   List<String> tags;
   List<String> replyTweetKeyList;
   User user;
+  String urlTemp;
   FeedModel(
       {this.key,
       this.description,

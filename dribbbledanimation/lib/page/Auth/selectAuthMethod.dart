@@ -63,7 +63,7 @@ class _WelcomePageState extends State<WelcomePage> {
             Container(
               width: MediaQuery.of(context).size.width - 80,
               height: 100,
-              child: Image.asset('assets/loginrc.jpeg'),
+              child: Image.asset('assets/logo_rcpng.png'),
             ),
             Spacer(),
             TitleText(

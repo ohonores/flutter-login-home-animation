@@ -59,7 +59,7 @@ class TweetImage extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 4 / 3,
                       child: customNetworkImage(model.imagePath,
-                          fit: BoxFit.cover),
+                          fit: BoxFit.cover, model: model),
                     ),
                   ),
                 ),

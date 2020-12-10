@@ -9,9 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:developer' as developer;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final kAnalytics = FirebaseAnalytics();
 final DatabaseReference kDatabase = FirebaseDatabase.instance.reference();
+final databaseReference = Firestore.instance;
+ 
 final kScreenloader = CustomLoader();
 
 String getPostTime2(String date) {
@@ -152,6 +155,21 @@ void debugLog(String log, {dynamic param = ""}) {
 
 void share(String message, {String subject}) {
   Share.share(message, subject: subject);
+  //
+}
+
+void shareTextoAndImagenes(String imagen, String text,
+    {String subject, RenderBox box}) async {
+  List<String> imagePaths = [];
+  //CachedNetworkImageProvider(url)
+
+  imagePaths.add(imagen);
+   await Share.shareFiles(imagePaths,
+      text: text,
+      subject: subject,
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  //await Share.share(imagen, subject: subject);
+  //
 }
 
 List<String> getHashTags(String text) {

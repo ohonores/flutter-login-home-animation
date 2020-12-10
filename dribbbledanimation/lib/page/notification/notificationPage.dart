@@ -60,7 +60,7 @@ class NotificationPageBody extends StatelessWidget {
   const NotificationPageBody({Key key}) : super(key: key);
 
   Widget _notificationRow(BuildContext context, NotificationModel model) {
-    var state = Provider.of<NotificationState>(context);
+    var state = Provider.of<NotificationState>(context, listen:false);
     return FutureBuilder(
       future: state.getTweetDetail(model.tweetKey),
       builder: (BuildContext context, AsyncSnapshot<FeedModel> snapshot) {
@@ -86,7 +86,7 @@ class NotificationPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<NotificationState>(context);
+    var state = Provider.of<NotificationState>(context, listen:false);
     var list = state.notificationList;
     if (state?.isbusy ?? true && (list == null || list.isEmpty)) {
       return SizedBox(
@@ -118,7 +118,7 @@ class NotificationTile extends StatelessWidget {
     var length = list.length;
     List<Widget> avaterList = [];
     final int noOfUser = list.length;
-    var state = Provider.of<NotificationState>(context);
+    var state = Provider.of<NotificationState>(context, listen:false);
     if (list != null && list.length > 5) {
       list = list.take(5).toList();
     }

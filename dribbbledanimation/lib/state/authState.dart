@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -69,6 +69,15 @@ class AuthState extends AppState {
         _profileQuery = kDatabase.child("profile").child(user.uid);
         _profileQuery.onValue.listen(_onProfileChanged);
       }
+     
+  databaseReference
+      .collection("usuarios")
+      .getDocuments()
+      .then((QuerySnapshot snapshot) {
+        cprint('usuarios**************************');
+    snapshot.documents.forEach((f) => cprint('${f.data}}'));
+  });
+
     } catch (error) {
       cprint(error, errorIn: 'databaseInit');
     }
